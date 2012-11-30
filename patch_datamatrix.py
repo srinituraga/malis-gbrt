@@ -114,7 +114,7 @@ def extract_patches_3d(image,
                 and max_patches < all_patches):
             n_patches = max_patches
         elif (isinstance(max_patches, (numbers.Real))
-                and 0 < max_patches < 1):
+                and 0 < max_patches <= 1):
             n_patches = int(max_patches * all_patches)
         else:
             raise ValueError("Invalid value for max_patches: %r" % max_patches)
@@ -125,12 +125,10 @@ def extract_patches_3d(image,
         j_s = rng.randint(n_w, size=n_patches)
         k_s = rng.randint(n_d, size=n_patches)
         for p, i, j, k in zip(patches, i_s, j_s, k_s):
-            # print image[i:i + p_h:s_h, j:j + p_w:s_w, k:k + p_d:s_d, :].shape
-            # print image[i:i + p_h:s_h, j:j + p_w:s_w, k:k + p_d:s_d, :].ravel().shape
-            # print p[:].shape
             p[:] = image[i:i + p_h:s_h, j:j + p_w:s_w, k:k + p_d:s_d, :].ravel()
     else:
         n_patches = all_patches
+        print "extracting all patches"
         patches = np.empty((n_patches, n_dim), dtype=dtype, order=order)
         for p, (i, j, k) in zip(patches, product(xrange(n_h), xrange(n_w), xrange(n_d))):
             p[:] = image[i:i + p_h:s_h, j:j + p_w:s_w, k:k + p_d:s_d, :].ravel()
@@ -166,7 +164,7 @@ def extract_patches_3d_affinity(seg,
                 and max_patches < all_patches):
             n_patches = max_patches
         elif (isinstance(max_patches, (numbers.Real))
-                and 0 < max_patches < 1):
+                and 0 < max_patches <= 1):
             n_patches = int(max_patches * all_patches)
         else:
             raise ValueError("Invalid value for max_patches: %r" % max_patches)
