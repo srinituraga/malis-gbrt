@@ -318,7 +318,7 @@ boost::python::tuple malisLoss(
     
 }
 
-BOOST_PYTHON_MODULE_INIT(pymalis) {
+BOOST_PYTHON_MODULE_INIT(malis_loss) {
     vigra::import_vigranumpy();
     boost::python::def("malisLoss", 
         vigra::registerConverters(&malisLoss)
